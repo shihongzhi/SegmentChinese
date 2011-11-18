@@ -186,6 +186,10 @@
 				RelativePath=".\main.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\Queue.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
@@ -198,6 +202,10 @@
 			</File>
 			<File
 				RelativePath=".\DynamicArray.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Queue.h"
 				>
 			</File>
 		</Filter>
