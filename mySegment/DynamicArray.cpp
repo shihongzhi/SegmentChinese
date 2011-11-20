@@ -69,25 +69,29 @@ CColFirstDynamicArray::CColFirstDynamicArray()
 	m_pArrayHead = NULL;
 }
 
-ELEMENT_TYPE CRowFirstDynamicArray::GetFirstElementOfRow(int nRow, PARRAY_CHAIN pStart/* =0 */)
+ELEMENT_TYPE CRowFirstDynamicArray::GetFirstElementOfRow(int nRow, PARRAY_CHAIN pStart, PARRAY_CHAIN *pRet)
 {
 	PARRAY_CHAIN pCur = pStart;
 	if (pStart == 0)
 		pCur = m_pArrayHead;
 	while (pCur!=NULL && pCur->row!=nRow)
 		pCur = pCur->next;
+	if (pRet!=0)
+		*pRet = pCur;
 	if (pCur == NULL)
 		return INFINITE_VALUE;
 	return pCur->value;
 }
 
-ELEMENT_TYPE CColFirstDynamicArray::GetFirstElementOfCol(int nCol, PARRAY_CHAIN pStart/* =0 */)
+ELEMENT_TYPE CColFirstDynamicArray::GetFirstElementOfCol(int nCol, PARRAY_CHAIN pStart, PARRAY_CHAIN *pRet)
 {
 	PARRAY_CHAIN pCur = pStart;
 	if (pStart == 0)
 		pCur = m_pArrayHead;
 	while (pCur!=NULL && pCur->col!=nCol)
 		pCur = pCur->next;
+	if (pRet!=0)
+		*pRet = pCur;
 	if (pCur == NULL)
 		return INFINITE_VALUE;
 	return pCur->value;

@@ -13,7 +13,7 @@ struct tagArrayChain{
 	unsigned int row,col;
 	int nPos;
 	int nWordLenght;
-	ELEMENT_TYPE value;
+	ELEMENT_TYPE value;  //weight
 	char *sWord;
 	struct tagArrayChain *next;
 };
@@ -37,7 +37,7 @@ class CRowFirstDynamicArray : public CDynamicArray{
 public:
 	CRowFirstDynamicArray();
 	~CRowFirstDynamicArray(){};
-	ELEMENT_TYPE GetFirstElementOfRow(int nRow, PARRAY_CHAIN pStart=0);
+	ELEMENT_TYPE GetFirstElementOfRow(int nRow, PARRAY_CHAIN pStart=0, PARRAY_CHAIN *pRet=0);
 	virtual void SetElement(int nRow, int nCol, ELEMENT_TYPE value, int nPos, char *sWord=0);
 };
 
@@ -45,7 +45,7 @@ class CColFirstDynamicArray : public CDynamicArray{
 public:
 	CColFirstDynamicArray();
 	~CColFirstDynamicArray(){};
-	ELEMENT_TYPE GetFirstElementOfCol(int nCol, PARRAY_CHAIN pStart=0);
+	ELEMENT_TYPE GetFirstElementOfCol(int nCol, PARRAY_CHAIN pStart=0, PARRAY_CHAIN *pRet=0);
 	virtual void SetElement(int nRow, int nCol, ELEMENT_TYPE value, int nPos, char *sWord=0);
 };
 

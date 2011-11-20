@@ -187,6 +187,10 @@
 				>
 			</File>
 			<File
+				RelativePath=".\NShortPath.cpp"
+				>
+			</File>
+			<File
 				RelativePath=".\Queue.cpp"
 				>
 			</File>
@@ -202,6 +206,10 @@
 			</File>
 			<File
 				RelativePath=".\DynamicArray.h"
+				>
+			</File>
+			<File
+				RelativePath=".\NShortPath.h"
 				>
 			</File>
 			<File
