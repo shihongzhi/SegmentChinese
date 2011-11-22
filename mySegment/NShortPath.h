@@ -9,7 +9,7 @@ public:
 	CNShortPath(CDynamicArray *pArray, unsigned int nValueKind);
 	~CNShortPath();
 	void ShortPath();
-	void GetPaths(unsigned int nNode, unsigned int nKindIndex, unsigned int **nResult);
+	void GetPaths(unsigned int nNode, unsigned int nKindIndex, int **nResult);
 private:
 	unsigned int m_nVertex;
 	unsigned int m_nValueKind;

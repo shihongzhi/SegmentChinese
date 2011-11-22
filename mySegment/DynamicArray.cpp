@@ -38,6 +38,20 @@ PARRAY_CHAIN CDynamicArray::GetHead()
 	return m_pArrayHead;
 }
 
+unsigned int CDynamicArray::GetTail(PARRAY_CHAIN *pTailRet)
+{
+	PARRAY_CHAIN pCur=m_pArrayHead, pPrev=NULL;
+	unsigned int nCount=0;
+	while (pCur!=NULL)
+	{
+		pPrev = pCur;
+		pCur = pCur->next;
+		nCount++;
+	}
+	*pTailRet = pPrev;
+	return nCount;
+}
+
 void CDynamicArray::SetEmpty()
 {
 	PARRAY_CHAIN pCur, pTemp;

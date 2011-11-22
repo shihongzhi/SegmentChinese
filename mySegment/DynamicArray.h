@@ -27,6 +27,7 @@ public:
 	ELEMENT_TYPE GetElement(int nRow, int nCol);
 	virtual void SetElement(int nRow, int nCol, ELEMENT_TYPE value, int nPos, char *sWord=0)=0;
 	PARRAY_CHAIN GetHead();
+	unsigned int GetTail(PARRAY_CHAIN *pTailRet);
 	void SetEmpty();
 	unsigned int m_nRow,m_nCol;
 protected:

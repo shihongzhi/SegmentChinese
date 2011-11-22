@@ -23,7 +23,7 @@ public:
 	int Pop(unsigned int *pParent=0, unsigned int *pIndex=0, ELEMENT_TYPE *weight=0);
 	int GetFirst(unsigned int *pParent=0, unsigned int *pIndex=0, ELEMENT_TYPE *weight=0);
 	int GetNext(unsigned int *pParent=0, unsigned int *pIndex=0, ELEMENT_TYPE *weight=0);
-	void OutputElement(int *pOutput, unsigned int *nLenght=0);
+	void OutputElement(int *pOutput, int *nLenght=0);
 	bool CanGetNext();
 private:
 	PQUEUE_ELEM m_pHead;

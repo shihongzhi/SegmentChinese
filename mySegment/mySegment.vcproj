@@ -194,6 +194,14 @@
 				RelativePath=".\Queue.cpp"
 				>
 			</File>
+			<File
+				RelativePath=".\SegGraph.cpp"
+				>
+			</File>
+			<File
+				RelativePath=".\Utility.cpp"
+				>
+			</File>
 		</Filter>
 		<Filter
 			Name="Í·ÎÄ¼þ"
@@ -214,6 +222,14 @@
 			</File>
 			<File
 				RelativePath=".\Queue.h"
+				>
+			</File>
+			<File
+				RelativePath=".\SegGraph.h"
+				>
+			</File>
+			<File
+				RelativePath=".\Utility.h"
 				>
 			</File>
 		</Filter>

@@ -106,7 +106,7 @@ int CQueue::GetNext(unsigned int *pParent, unsigned int *pIndex, double *weight)
 		*pParent = m_pLastAccess->nParent;
 	if (pIndex!=NULL)
 		*pIndex = m_pLastAccess->nIndex;
-	if (PQUEUE_ELEM!=NULL)
+	if (weight!=NULL)
 		*weight = m_pLastAccess->weight;
 	return 1;
 }
@@ -116,9 +116,9 @@ bool CQueue::CanGetNext()
 	return (m_pLastAccess->next!=NULL);
 }
 
-void CQueue::OutputElement(int *pOutput, unsigned int *nLenght)
+void CQueue::OutputElement(int *pOutput, int *nLenght)
 {
-	unsigned int nCount=0;
+	int nCount=0;
 	PQUEUE_ELEM pCur=m_pHead;
 	while (pCur!=NULL)
 	{
