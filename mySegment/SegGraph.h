@@ -12,7 +12,7 @@ class CSegGraph
 public:
 	CSegGraph();
 	~CSegGraph();
-	void DoSegment(char *sSentence, CDictionary &dictCore, CDictionary &dictBinary);
+	void DoSegment(char *sSentence, CDictionary &dictCore, CDictionary &dictBinary, unsigned int nResultCount);
 	void AtomSegment(char *sSentence);
 	void GenerateWordNet(char *sSentence, CDictionary &dict);
 	void BiGraphGenerate(CRowFirstDynamicArray &aWord, CColFirstDynamicArray &aBinaryWordNet, double dSmoothingPara, CDictionary &dictCore, CDictionary &dictBinary);

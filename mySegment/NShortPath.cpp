@@ -1,6 +1,6 @@
 #include "NShortPath.h"
 
-CNShortPath::CNShortPath(CDynamicArray *pArray, unsigned int nValueKind)
+CNShortPath::CNShortPath(CColFirstDynamicArray *pArray, unsigned int nValueKind)
 {
 	m_pArray = pArray;
 	m_nVertex = m_pArray->m_nCol + 1;
@@ -37,7 +37,7 @@ void CNShortPath::ShortPath()
 	for (; nCur<m_nVertex; ++nCur)
 	{
 		CQueue qParent;
-		eWeight = ((CColFirstDynamicArray*)m_pArray)->GetFirstElementOfCol(nCur, 0, &pColList);
+		eWeight = m_pArray->GetFirstElementOfCol(nCur, 0, &pColList);
 		while (pColList!=NULL && pColList->col==nCur)
 		{
 			nPre = pColList->row;
@@ -54,6 +54,7 @@ void CNShortPath::ShortPath()
 				else
 				{
 					qParent.Push(nPre, i, eWeight);
+					break;  //这里需要break的，因为nPre=0时只有一种情况，而不是所有i都需要push的
 				}
 			}
 			pColList = pColList->next;
@@ -84,7 +85,7 @@ void CNShortPath::ShortPath()
 void CNShortPath::GetPaths(unsigned int nNode, unsigned int nKindIndex, int **nResult)
 {
 	CQueue stack;
-	unsigned int nCurNode, nCurIndex, nParentNode, nParentIndex, nResultIndex=0, nResultCount=0;
+	unsigned int nCurNode, nCurIndex, nParentNode, nParentIndex, nResultIndex=0;
 	int nResultLenght;
 	stack.Push(nNode, nKindIndex);
 	nCurNode = nNode;
@@ -106,19 +107,22 @@ void CNShortPath::GetPaths(unsigned int nNode, unsigned int nKindIndex, int **nR
 		//Set the nResult data
 		if (nCurNode==0)
 		{
-			nResult[nResultCount][nResultIndex++] = nCurNode;
+			nResult[m_nResultCount][nResultIndex++] = nCurNode;
 			nResultLenght = 0;
-			stack.OutputElement(&nResult[nResultCount][nResultIndex], &nResultLenght);
-			nResult[nResultCount][nResultLenght] = -1; //Set the end;
-			nResultCount++;
-			nResultIndex = 0;
+			stack.OutputElement(&nResult[m_nResultCount][nResultIndex], &nResultLenght);
+			nResult[m_nResultCount][nResultLenght+1] = -1; //Set the end;
+
+			m_nResultCount++;
+			if (m_nResultCount>=MAX_SEGMENT_NUM)
+				return ;
+			nResultIndex = 0;	
 		}
 		//出栈以检查是否还有其它路径
 		do 
 		{
 			stack.Pop(&nCurNode, &nCurIndex);
-		} while (!stack.isEmpty() && m_pParent[nCurNode-1][nCurIndex].isSingle());
-		if (m_pParent[nCurNode-1][nCurIndex].Pop(&nParentNode, &nParentIndex)!=-1 && !m_pParent[nCurNode-1][nCurIndex].isSingle())
+		} while (nCurNode<1 || (!stack.isEmpty() && m_pParent[nCurNode-1][nCurIndex].isSingle()));
+		if (!m_pParent[nCurNode-1][nCurIndex].isSingle() && m_pParent[nCurNode-1][nCurIndex].Pop(&nParentNode, &nParentIndex)!=-1)
 		{
 			nCurNode = nParentNode;
 			nCurIndex = nParentIndex;
@@ -128,3 +132,22 @@ void CNShortPath::GetPaths(unsigned int nNode, unsigned int nKindIndex, int **nR
 	}
 }
 
+
+void CNShortPath::Output(int **nResult, int *nCount)
+{
+	if (m_nVertex<2)
+	{
+		nResult[0][1] = 0;
+		*nCount = 1;
+		return ;
+	}
+	*nCount = 0;
+	m_nResultCount = 0;
+	for (int i=0; i<m_nValueKind&&m_pWeight[m_nVertex-2][i]<INFINITE_VALUE; ++i)
+	{
+		GetPaths(m_nVertex-1, i, nResult);
+		*nCount = m_nResultCount;
+		if (m_nResultCount>=MAX_SEGMENT_NUM)
+			return ;
+	}
+}

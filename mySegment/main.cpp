@@ -16,12 +16,13 @@ int main()
 	//	}
 	//	printf("\n");
 	//}
-	char testChar[] = "始##始王晓平在1月份滦南大会上说的确实在理末##末";
+	//char testChar[] = "始##始王晓平在1月份滦南大会上说的确实在理末##末";
+	char testChar[] = "始##始他说的确实在理末##末";
 	printf("=====原始句子=====:\n\n");
 	printf("%s\n\n",testChar);
 	CSegGraph seg;
 	//seg.AtomSegment(testChar);
-	seg.DoSegment(testChar, dictCore, dictBinary);
+	seg.DoSegment(testChar, dictCore, dictBinary, 10);
 
 	getchar();
 	return 0;

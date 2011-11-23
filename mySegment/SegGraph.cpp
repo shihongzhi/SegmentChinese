@@ -1,5 +1,6 @@
 #include "SegGraph.h"
 #include "Utility.h"
+#include "NShortPath.h"
 #include <math.h>
 
 CSegGraph::CSegGraph()
@@ -12,16 +13,50 @@ CSegGraph::~CSegGraph()
 
 }
 
-void CSegGraph::DoSegment(char *sSentence, CDictionary &dictCore, CDictionary &dictBinary)
+void CSegGraph::DoSegment(char *sSentence, CDictionary &dictCore, CDictionary &dictBinary, unsigned int nResultCount)
 {
 	//原子切分
 	AtomSegment(sSentence);
 
 	//生成segGraph
 	GenerateWordNet(sSentence, dictCore);
-
+	
+	//生成BiSegGraph
 	CColFirstDynamicArray tempBiGraph;
 	BiGraphGenerate(m_segGraph, tempBiGraph, 0.1, dictCore, dictBinary);
+
+	int **nSegRoute;//The segmentation route
+	nSegRoute=new int*[MAX_SEGMENT_NUM];
+	unsigned int nLen=strlen(sSentence)+10;
+	for(int i=0;i<MAX_SEGMENT_NUM;i++)
+	{
+		nSegRoute[i]=new int[nLen/2];
+		memset(nSegRoute[i],-1,nLen/2*sizeof(int));
+	}
+	int nCount;
+	CNShortPath sp(&tempBiGraph, nResultCount);
+	sp.ShortPath();
+	sp.Output(nSegRoute, &nCount);
+	//test printf;
+	printf("=====NShortPath优化=====：\n");
+	int testCount;
+	PARRAY_CHAIN pTestCur;
+	for (int i=0; i<MAX_SEGMENT_NUM; ++i)
+	{
+		pTestCur = m_segGraph.GetHead();
+		testCount = 0;
+		for (int j=0; j<nLen/2&&nSegRoute[i][j]!=-1; ++j)
+		{
+			while (testCount < nSegRoute[i][j])
+			{
+				testCount++;
+				pTestCur = pTestCur->next;
+			}
+			printf("%s,", pTestCur->sWord);
+		}
+		printf("\n");
+	}
+
 }
 
 //原子分词
