@@ -37,6 +37,7 @@ void CSegGraph::DoSegment(char *sSentence, CDictionary &dictCore, CDictionary &d
 	CNShortPath sp(&tempBiGraph, nResultCount);
 	sp.ShortPath();
 	sp.Output(nSegRoute, &nCount);
+
 	//test printf;
 	printf("=====NShortPath”≈ªØ=====£∫\n");
 	int testCount;
